@@ -12,7 +12,7 @@ public class Main {
         if (!gamesDirectory.exists()) {
             if (!gamesDirectory.mkdir()) {
                 log.append("Упс! Не получилось создать директорий: ").append(fileDirectory).append("\n");
-                printLog();
+                // printLog();
                 return;
             }
         }
@@ -46,14 +46,17 @@ public class Main {
             } else {
                 log.append("Упс! Кажется такой директорий уже есть: ").append(dir).append("\n");
             }
-            printLog();
+            //printLog();
         }
-
+        
         for (String file : filesToCreate) {
             File newFile = new File(fileDirectory, file);
             if (!newFile.exists()) {
                 try {
                     if (newFile.createNewFile()) {
+                        //добавлено сообщение об успешно созданном файле
+                        log.append("Файл создан: ").append(file).append("\n");
+                    } else {
                         log.append("Упс! Не получилось создать файл: ").append(file).append("\n");
                     }
                 } catch (IOException e) {
@@ -63,12 +66,15 @@ public class Main {
             } else {
                 log.append("Ой, кажется файл уже существует: ").append(file).append("\n");
             }
-            printLog();
+            //printLog();
         }
 
         Path tempFilePath = Paths.get(fileDirectory, "temp/temp.txt");
         try (FileWriter fileWriter = new FileWriter(tempFilePath.toFile())) {
             fileWriter.write(log.toString());
+            //добавлены изменения
+            fileWriter.append('\n');
+            fileWriter.flush();
             log.setLength(0);
             System.out.println("Файл создан: temp/temp.txt");
         } catch (IOException e) {
@@ -76,14 +82,14 @@ public class Main {
             e.printStackTrace();
         }
     }
-
-    private static void printLog() {
-        System.out.print(log);
-        try {
-            Files.write(Paths.get("C:/Games/temp/temp.txt"), log.toString().getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        log.setLength(0);
-    }
+// метод удален
+    //private static void printLog() {
+       // System.out.print(log);
+       //try {
+          // Files.write(Paths.get("C:/Games/temp/temp.txt"), log.toString().getBytes());
+       // } catch (IOException e) {
+          //  e.printStackTrace();
+        //}
+       // log.setLength(0);
+    //}
 }
